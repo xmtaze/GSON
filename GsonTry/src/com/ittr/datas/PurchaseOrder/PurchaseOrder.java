@@ -1,8 +1,8 @@
 package com.ittr.datas.PurchaseOrder;
 
-import com.ittr.datas.Order.AbstractOrder;
+import com.ittr.datas.Order.Order;
 
-public class PurchaseOrder extends AbstractOrder{
+public class PurchaseOrder extends Order{
 	
 	public PurchaseOrder() {
 		super();

@@ -6,5 +6,7 @@ public class Util {
 	public static String northwindStartURl = "http://services.odata.org/V2/Northwind/Northwind.svc/";
 	public static String responseForInvoiceString = "Invoices?$filter=";
 	public static String filter = "OrderID%20eq%20";
-	public static String or= "%20or%20";
+	public static String or = "%20or%20";
+	public static String orderUrl = northwindStartURl + responsforOrderString;
+	public static String invoiceUrl = northwindStartURl +responseForInvoiceString;
 }

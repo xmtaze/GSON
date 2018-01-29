@@ -3,7 +3,7 @@ package com.ittr.datas.Order;
 import com.ittr.datas.Invoice.Invoice;
 import com.ittr.datas.OrderDetail.Order_DetailData;
 
-public class AbstractOrder {
+public class Order {
 
 	private int OrderID;
 	private String CustomerID;
@@ -18,6 +18,8 @@ public class AbstractOrder {
 	private String ShipCountry;
 	private int typeCode;
 	
+	private Invoice invoice;
+	
 	public int getTypeCode() {
 		return typeCode;
 	}
@@ -25,8 +27,6 @@ public class AbstractOrder {
 	public void setTypeCode(int typeCode) {
 		this.typeCode = typeCode;
 	}
-
-	Invoice invoice;
 	
 	public Invoice getInvoice() {
 		return invoice;

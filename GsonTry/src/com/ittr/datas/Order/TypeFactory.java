@@ -7,7 +7,7 @@ import com.ittr.datas.SalesOrder.SalesOrder;
 // bu class þuan kullanýlmýyor kafam baya karýþtý.
 public class TypeFactory {
 
-	public static AbstractOrder getOrderType(String orderType) {
+	public static Order getOrderType(String orderType) {
 		
 		if (orderType == null) {
 			return null;

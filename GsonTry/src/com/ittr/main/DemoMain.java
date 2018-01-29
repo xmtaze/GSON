@@ -1,6 +1,7 @@
 package com.ittr.main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -23,9 +24,10 @@ public class DemoMain {
 		try {
 			List<Invoice> invoiceListForSalesOrder = new ArrayList<>();
 			List<Invoice> invoiceListForPurchaseOrder = new ArrayList<>();
+
 			//OrderÝçin Tüm verileri alýnýyor
 			httpClient = new DefaultHttpClient();
-			HttpResponse responseForOrder = Connection.getResponse(Util.northwindStartURl+Util.responsforOrderString
+			HttpResponse responseForOrder = Connection.getResponse(Util.orderUrl
 					, httpClient);
 			String responseStringforOrder = Connection.readData(responseForOrder);
 			Gson gson = new Gson();
@@ -34,8 +36,8 @@ public class DemoMain {
 			SalesOrderDataset salesOrder = gson.fromJson(responseStringforOrder, SalesOrderDataset.class);
 			PurchaseOrderDataset purchaseOrder = gson.fromJson(responseStringforOrder, PurchaseOrderDataset.class);
 
-			//Invoice için tüm verileri alýnýr
-			String startUrl = Util.northwindStartURl+Util.responseForInvoiceString;
+			//Invoice için tüm verileri alýnýr SalesOrder ve PurchaseOrder için iki ayrý listeye eklenir.
+			String startUrl = Util.invoiceUrl;
 			int serverResponseSize = 50;
 			for(int i = 0 ; i<serverResponseSize; i++) {
 
@@ -49,51 +51,56 @@ public class DemoMain {
 					invoiceListForPurchaseOrder.addAll(invoice.d.results);
 					if(serverResponseSize < salesOrder.d.results.size()) {
 						serverResponseSize = serverResponseSize + 50;
-						startUrl =Util.northwindStartURl+Util.responseForInvoiceString;
+						startUrl =Util.invoiceUrl;
 					}
-
 				} else {
 					startUrl = startUrl+Util.filter+salesOrder.d.results.get(i).getOrderID()+Util.or;
 				}
 			}
-
-			// Invoice içerisine SalesOrder, SalesOrder içerisine invoice set ediliyor
-			for(int i = 0 ; i<salesOrder.d.results.size(); i++) {
-				int orderID = salesOrder.d.results.get(i).getOrderID();
-
-				for (int j = 0 ; j< invoiceListForSalesOrder.size(); j++) {
-					int invoiceOrderId = invoiceListForSalesOrder.get(j).getOrderID();
-
-					if(orderID == invoiceOrderId) {
-
-						salesOrder.d.results.get(i).setInvoice(invoiceListForSalesOrder.get(j));
-						invoiceListForSalesOrder.get(j).setOrderType(salesOrder.d.results.get(i).getTypeCode(), salesOrder.d.results.get(i));
-					}
-				}
-			}
-
-			// Invoice içerisine PurchaseOrder, PurchaseOrder içerisine invoice set ediliyor
-			for(int i = 0 ; i<purchaseOrder.d.results.size(); i++) {
-				int orderID = purchaseOrder.d.results.get(i).getOrderID();
-
-				for (int j = 0 ; j< invoiceListForPurchaseOrder.size(); j++) {
-					int invoiceOrderId = invoiceListForPurchaseOrder.get(j).getOrderID();
-
-					if(orderID == invoiceOrderId) {
-
-						purchaseOrder.d.results.get(i).setInvoice(invoiceListForPurchaseOrder.get(j));
-						invoiceListForPurchaseOrder.get(j).setOrderType(purchaseOrder.d.results.get(i).getTypeCode(), purchaseOrder.d.results.get(i));
-					}
-				}
-			}
 			
+			//List<Invoice> invoiceListForPurchaseOrder = createDeepCopyOfArrayList(invoiceListForSalesOrder);
+			
+			
+			//SalesOrder içerisine invoice ve invoice içerisine SalesOrder set etme iþlemleri.
+			for(int i = 0 ; i < salesOrder.d.results.size(); i++) {
+				int orderId = salesOrder.d.results.get(i).getOrderID();
+				for(int j = 0 ; j < invoiceListForSalesOrder.size(); j++) {
+					int invoiceOrderId = invoiceListForSalesOrder.get(j).getOrderID();
+					if(orderId == invoiceOrderId) {
+						if(salesOrder.d.results.get(i).getTypeCode() == 1) {
+							salesOrder.d.results.get(i).setInvoice(invoiceListForSalesOrder.get(j));
+							invoiceListForSalesOrder.get(j).setOrder(salesOrder.d.results.get(i));
+						}
+					}				
+				}
+			}
+			//SalesOrder içerisine invoice ve invoice içerisine SalesOrder set etme iþlemleri.
+			for(int i = 0 ; i < purchaseOrder.d.results.size() ; i++) {
+				int orderId = purchaseOrder.d.results.get(i).getOrderID();
+				for(int j = 0 ; j < invoiceListForPurchaseOrder.size() ; j++) {
+					int invoiceOrderId = invoiceListForPurchaseOrder.get(j).getOrderID();
+					if(orderId == invoiceOrderId) {
+						if(purchaseOrder.d.results.get(i).getTypeCode() == 2) {
+							purchaseOrder.d.results.get(i).setInvoice(invoiceListForPurchaseOrder.get(j));
+							invoiceListForPurchaseOrder.get(j).setOrder(purchaseOrder.d.results.get(i));
+						}
+					}
+				}
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			httpClient.getConnectionManager().shutdown();
 		}
-
 	}
-
-
+	
+	// Elimizde var olan listenin deep copysini yaratmaya çalýþýyoruz.
+	public static List<Invoice> createDeepCopyOfArrayList(final List<Invoice> list) {	
+		ArrayList copyList = new ArrayList<>(list);
+		return copyList;
+	}
+	
+	
+	
 }

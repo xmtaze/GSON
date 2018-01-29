@@ -1,8 +1,8 @@
 package com.ittr.datas.SalesOrder;
 
-import com.ittr.datas.Order.AbstractOrder;
+import com.ittr.datas.Order.Order;
 
-public class SalesOrder extends AbstractOrder {
+public class SalesOrder extends Order {
 	 
 	public SalesOrder() {
 		super();
@@ -10,5 +10,4 @@ public class SalesOrder extends AbstractOrder {
 		// Eðer type code 1'e eþitse salesOrderdýr 
 		setTypeCode(1);
 	}
-
 }

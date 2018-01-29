@@ -1,6 +1,6 @@
 package com.ittr.datas.Invoice;
 
-import com.ittr.datas.Order.AbstractOrder;
+import com.ittr.datas.Order.Order;
 import com.ittr.datas.Order.TypeFactory;
 import com.ittr.datas.PurchaseOrder.PurchaseOrder;
 import com.ittr.datas.SalesOrder.SalesOrder;
@@ -31,22 +31,21 @@ public class Invoice {
 	private double ExtendedPrice;
 	private double Freight;
 
-	AbstractOrder order;
+	private Object order;
 
-	public void setOrderType(int typeCode ,AbstractOrder abstOrder) {
+	public void setOrder(Object order) {
 		
-		if(typeCode == 0) {
-			order = abstOrder;
+		if(order.getClass().equals(SalesOrder.class)) {
+			this.order = (SalesOrder) order;
 		}
-		if(typeCode == 1) { 
-			order = (SalesOrder) abstOrder;
+		if(order.getClass().equals(PurchaseOrder.class)) {
+			this.order = (PurchaseOrder) order;
 		}
-		if(typeCode == 2) {
-			order = (PurchaseOrder) abstOrder;
-		}
-		
 	}
 
+	public Object getOrder() {
+		return order;
+	}
 	public String getShipName() {
 		return ShipName;
 	}
