@@ -9,8 +9,38 @@ public class Order_Detail {
 	private double UnitPrice;
 	private short Quantity;
 	private float Discount;
-
+	
+	// Excelden veri gelirken kullandığımız alanlar(PurchaseOrder için olan)
+	private int ExternalOrderID;
+	protected int ExternalItemID;
+	protected long InternalOrderID;
+	
 	Product Product;
+	
+	public long getInternalOrderID() {
+		return InternalOrderID;
+	}
+	public void setInternalOrderID(long internalOrderID) {
+		InternalOrderID = internalOrderID;
+	}
+	public int getExternalOrderID() {
+		return ExternalOrderID;
+	}
+	public void setExternalOrderID(int externalOrderID) {
+		ExternalOrderID = externalOrderID;
+	}
+	public int getExternalItemID() {
+		return ExternalItemID;
+	}
+	public void setExternalItemID(int externalItemID) {
+		ExternalItemID = externalItemID;
+	}
+	public Product getProduct() {
+		return Product;
+	}
+	public void setProduct(Product product) {
+		Product = product;
+	}
 	public int getOrderID() {
 		return OrderID;
 	}

@@ -19,6 +19,7 @@ public class Order {
 	private int typeCode;
 	
 	private Invoice invoice;
+	Order_DetailData Order_Details;
 	
 	public int getTypeCode() {
 		return typeCode;
@@ -35,9 +36,6 @@ public class Order {
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
 	}
-
-	Order_DetailData Order_Details;
-
 	public int getOrderID() {
 		return OrderID;
 	}

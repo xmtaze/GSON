@@ -1,10 +1,8 @@
 package com.ittr.datas.Invoice;
 
-import com.ittr.datas.Order.Order;
-import com.ittr.datas.Order.TypeFactory;
 import com.ittr.datas.PurchaseOrder.PurchaseOrder;
 import com.ittr.datas.SalesOrder.SalesOrder;
-import com.ittr.datas.Order.TypeFactory;;
+
 public class Invoice {
 
 	private String ShipName;
@@ -33,6 +31,7 @@ public class Invoice {
 
 	private Object order;
 
+	// Obje tipinde bir order tutuluyor ve verilen tipe göre o tipten Invoice içerisine ekleniyor
 	public void setOrder(Object order) {
 		
 		if(order.getClass().equals(SalesOrder.class)) {
