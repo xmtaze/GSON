@@ -19,8 +19,9 @@ public class DemoMain {
 
 		// PurchaseOrder Operations
 		PurchaseOrder purchaseOrder = new PurchaseOrder();
-		purchaseOrder.setPurchaseOrderDetail(purchaseOrder);
-		
+		List<PurchaseOrder> purchaseOrderList = new ArrayList<>();
+		purchaseOrderList = purchaseOrder.setPurchaseOrderDetail(purchaseOrder);
+
 		// SalesOrder Operations
 		DefaultHttpClient httpClient = null;
 		try {
@@ -57,7 +58,7 @@ public class DemoMain {
 					startUrl = startUrl+Util.filter+salesOrder.d.results.get(i).getOrderID()+Util.or;
 				}
 			}
-			
+
 			//SalesOrder i�erisine invoice ve invoice i�erisine SalesOrder set etme i�lemleri
 			for(int i = 0 ; i < salesOrder.d.results.size(); i++) {
 				int orderId = salesOrder.d.results.get(i).getOrderID();
@@ -78,5 +79,5 @@ public class DemoMain {
 			httpClient.getConnectionManager().shutdown();
 		}
 	}
-	
+
 }

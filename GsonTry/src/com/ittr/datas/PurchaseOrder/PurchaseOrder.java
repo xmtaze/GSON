@@ -3,30 +3,31 @@ package com.ittr.datas.PurchaseOrder;
 import java.util.ArrayList;
 import java.util.List;
 import com.ittr.datas.Order.Order;
-import com.ittr.main.PurchaseOrderListPerItem;
 
 public class PurchaseOrder extends Order{
-
+	
+	private List<PurchaseOrderDetail> purchaseOrderDetailList = new ArrayList<PurchaseOrderDetail>();
+	
 	public PurchaseOrder() {
 		super();
 
 		// Eğer typeCode 2 ise PurchaseOrderder.
 		setTypeCode(2);
 	}
-	List<PurchaseOrderListPerItem> PurchaseOrderITEMLIST = new ArrayList<>();
-
-	public List<PurchaseOrderListPerItem> getPurchaseOrderLIST() {
-		return PurchaseOrderITEMLIST;
+	
+	public List<PurchaseOrderDetail> getPurchaseOrderDetailListForSameItem() {
+		return purchaseOrderDetailList;
 	}
-
-	public void setPurchaseOrderLIST(List<PurchaseOrderListPerItem> purchaseOrderDetailListForItemLIST) {
-		PurchaseOrderITEMLIST = purchaseOrderDetailListForItemLIST;
+	public void setPurchaseOrderDetailListForSameItem(List<PurchaseOrderDetail> purchaseOrderDetailListForSameItem) {
+		this.purchaseOrderDetailList = purchaseOrderDetailListForSameItem;
 	}
+	
+	// PurchaseOrderların içerisine PurchaseOrderDetaillerin set edilmesi
+	public List<PurchaseOrder> setPurchaseOrderDetail(PurchaseOrder purchaseOrder) throws Exception {
 
-	public PurchaseOrderDetail setPurchaseOrderDetail(PurchaseOrder purchaseOrder) throws Exception {
-
+		List<PurchaseOrder> purchaseOrderList = new ArrayList<PurchaseOrder>();
 		PurchaseOrderDetail purchaseOrderDetail = new PurchaseOrderDetail();
-		purchaseOrderDetail.setPurchaseOrderDetailItemsInPurchaseOrder(this);
-		return purchaseOrderDetail;
+		purchaseOrderList = purchaseOrderDetail.setPurchaseOrderDetailItemsInPurchaseOrder(purchaseOrder);
+		return purchaseOrderList;
 	}
 }
