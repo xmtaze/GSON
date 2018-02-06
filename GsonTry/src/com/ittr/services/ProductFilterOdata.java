@@ -13,6 +13,7 @@ public class ProductFilterOdata {
 
     public static List<Product> productFilterOData() throws Exception {
        
+    	// Tüm productlar servisten çekilir ve listeye eklenir
     	List<Product> productList = new ArrayList<Product>();
         DefaultHttpClient httpClient = null;
             Connection connection = new Connection();

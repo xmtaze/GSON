@@ -21,6 +21,7 @@ public class Util {
     
     public static  String ReadDataFromExcelPath ="src/com/ittr/PurchaseOrder.xls";
 
+    // InternalOrderID Generate etmek için kullanılan fonksiyon
     public static synchronized long createID() {
         long lastvalue = idCounter.getAndIncrement();
         return lastvalue;

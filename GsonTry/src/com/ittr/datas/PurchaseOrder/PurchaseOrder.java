@@ -2,9 +2,8 @@ package com.ittr.datas.PurchaseOrder;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.ittr.datas.Order.Order;
-import com.ittr.main.PurchaseOrderListForItem;
+import com.ittr.main.PurchaseOrderListPerItem;
 
 public class PurchaseOrder extends Order{
 
@@ -14,20 +13,19 @@ public class PurchaseOrder extends Order{
 		// Eğer typeCode 2 ise PurchaseOrderder.
 		setTypeCode(2);
 	}
-	List<PurchaseOrderListForItem> PurchaseOrderDetailListForItemLIST = new ArrayList<>();
+	List<PurchaseOrderListPerItem> PurchaseOrderITEMLIST = new ArrayList<>();
 
-	public List<PurchaseOrderListForItem> getPurchaseOrderDetailListForItemLIST() {
-		return PurchaseOrderDetailListForItemLIST;
+	public List<PurchaseOrderListPerItem> getPurchaseOrderLIST() {
+		return PurchaseOrderITEMLIST;
 	}
 
-	public void setPurchaseOrderDetailListForItemLIST(List<PurchaseOrderListForItem> purchaseOrderDetailListForItemLIST) {
-		PurchaseOrderDetailListForItemLIST = purchaseOrderDetailListForItemLIST;
+	public void setPurchaseOrderLIST(List<PurchaseOrderListPerItem> purchaseOrderDetailListForItemLIST) {
+		PurchaseOrderITEMLIST = purchaseOrderDetailListForItemLIST;
 	}
 
 	public PurchaseOrderDetail setPurchaseOrderDetail(PurchaseOrder purchaseOrder) throws Exception {
 
 		PurchaseOrderDetail purchaseOrderDetail = new PurchaseOrderDetail();
-		List<PurchaseOrderListForItem> PurchaseOrderDetailListForItemLIST = new ArrayList<>();
 		purchaseOrderDetail.setPurchaseOrderDetailItemsInPurchaseOrder(this);
 		return purchaseOrderDetail;
 	}

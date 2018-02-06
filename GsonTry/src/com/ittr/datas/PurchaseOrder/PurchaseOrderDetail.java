@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import com.ittr.datas.OrderDetail.Order_Detail;
 import com.ittr.main.ExcelDataManager;
-import com.ittr.main.PurchaseOrderListForItem;
+import com.ittr.main.PurchaseOrderListPerItem;
 
 public class PurchaseOrderDetail extends Order_Detail implements Comparable<PurchaseOrderDetail>   { 
 
@@ -16,10 +16,11 @@ public class PurchaseOrderDetail extends Order_Detail implements Comparable<Purc
 		purchaseOrderDetailList = excelDataManager.createPurchaseOrderDetailList();
 		Collections.sort(purchaseOrderDetailList);
 
-		PurchaseOrderListForItem purchaseOrderListForItem = new PurchaseOrderListForItem();
-		List<PurchaseOrderListForItem> PurchaseOrderDetailListForItemLIST = new ArrayList<>();
+		PurchaseOrderListPerItem purchaseOrderListForItem = new PurchaseOrderListPerItem();
+		List<PurchaseOrderListPerItem> PurchaseOrderDetailListForItemLIST = new ArrayList<>();
 		List<PurchaseOrderDetail> purchaseOrderDetailListForSameItems = new ArrayList<PurchaseOrderDetail>();
 		
+		// İlk başta liste sıralı geldiği için aynı olanları purchaseOrderDetailListForSameItems'a ekliyoruz
 		int preExternalOrderId = purchaseOrderDetailList.get(0).getExternalOrderID();;
 		for(int i = 0 ; i<purchaseOrderDetailList.size(); i++) {
 			int lastExternalOrderId = purchaseOrderDetailList.get(i).getExternalOrderID();
@@ -28,8 +29,9 @@ public class PurchaseOrderDetail extends Order_Detail implements Comparable<Purc
 				purchaseOrderDetailListForSameItems.add(purchaseOrderDetailList.get(i));
 				preExternalOrderId = lastExternalOrderId;
 			}
+			// Sonrasında değişen her bir ExternalOrderId için yeni bir Liste açıp purchaseOrderDetailListForSameItems'a ekliyoruz
 			else {
-				PurchaseOrderListForItem purchaseOrderListForItemChange = new PurchaseOrderListForItem();
+				PurchaseOrderListPerItem purchaseOrderListForItemChange = new PurchaseOrderListPerItem();
 				List<PurchaseOrderDetail> purchaseOrderDetailListForSameItemsAfterChange = new ArrayList<PurchaseOrderDetail>();
 				purchaseOrderDetailListForSameItemsAfterChange.add(purchaseOrderDetailList.get(i));
 				purchaseOrderListForItemChange.setPurchaseOrderDetailListForSameItem(purchaseOrderDetailListForSameItemsAfterChange);
@@ -39,10 +41,9 @@ public class PurchaseOrderDetail extends Order_Detail implements Comparable<Purc
 		}
 		purchaseOrderListForItem.setPurchaseOrderDetailListForSameItem(purchaseOrderDetailListForSameItems);
 		PurchaseOrderDetailListForItemLIST.add(purchaseOrderListForItem);
-		purchaseOrder.setPurchaseOrderDetailListForItemLIST(PurchaseOrderDetailListForItemLIST);
+		purchaseOrder.setPurchaseOrderLIST(PurchaseOrderDetailListForItemLIST);
 		return purchaseOrder;
 	}
-
 
 	@Override
 	public int compareTo(PurchaseOrderDetail a) {
@@ -57,11 +58,5 @@ public class PurchaseOrderDetail extends Order_Detail implements Comparable<Purc
 				return -1;
 		}
 	}
-
-	//	 public PurchaseOrderDetail(int ExternalOrderID, int ExternalItemID) {
-		//    super();
-		//    this.ExternalItemID= ExternalOrderID;
-	//    this.ExternalItemID = ExternalItemID;
-	//}
 }
 

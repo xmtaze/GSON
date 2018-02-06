@@ -5,8 +5,9 @@ import java.util.List;
 
 import com.ittr.datas.PurchaseOrder.PurchaseOrderDetail;
 
-// bu class PurchaseOrderDetaillerin ExternalOrderId leri aynı olanları PurchaseOrderDetailistesi halinde 
-public class PurchaseOrderListForItem {
+// bu class PurchaseOrderDetaillerin ExternalOrderId leri aynı olanları PurchaseOrderDetailistesi halinde tutmamızı sağlıyor
+// Aslında PurchaseOrder Bu class
+public class PurchaseOrderListPerItem {
 
 	private List<PurchaseOrderDetail> purchaseOrderDetailListForSameItem = new ArrayList<PurchaseOrderDetail>();
 	
