@@ -28,8 +28,9 @@ public class DemoMain {
 
 			//Order��in T�m verileri al�n�yor
 			httpClient = new DefaultHttpClient();
-			HttpResponse responseForOrder = Connection.getResponse(Util.orderUrl, httpClient);
-			String responseStringforOrder = Connection.readData(responseForOrder);
+			Connection connection = new Connection();
+			HttpResponse responseForOrder = connection.getResponse(Util.orderUrl, httpClient);
+			String responseStringforOrder = connection.readData(responseForOrder);
 			Gson gson = new Gson();
 
 			// PurchaseOrder ve SalesOrder i�in ayn� veriler kullan�yor bu y�zden ayn� response ile gson classlara oturtuyor
@@ -44,8 +45,8 @@ public class DemoMain {
 				if( i == serverResponseSize-1 ) {
 					startUrl = startUrl+Util.filter+salesOrder.d.results.get(i).getOrderID();
 
-					HttpResponse responseForInvoice = Connection.getResponse(startUrl, httpClient);
-					String responseStringForInvoce = Connection.readData(responseForInvoice);
+					HttpResponse responseForInvoice = connection.getResponse(startUrl, httpClient);
+					String responseStringForInvoce = connection.readData(responseForInvoice);
 					InvoiceDataset invoice = gson.fromJson(responseStringForInvoce, InvoiceDataset.class);
 					invoiceListForSalesOrder.addAll(invoice.d.results);
 					if(serverResponseSize < salesOrder.d.results.size()) {

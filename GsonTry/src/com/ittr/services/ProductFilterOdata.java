@@ -17,8 +17,8 @@ public class ProductFilterOdata {
         DefaultHttpClient httpClient = null;
             Connection connection = new Connection();
             httpClient = new DefaultHttpClient();
-            HttpResponse httpResponse = Connection.getResponse(Util.northwindStartURl + Util.filterForProduct , httpClient);
-            String responseFromJson = Connection.readData(httpResponse);
+            HttpResponse httpResponse = connection.getResponse(Util.northwindStartURl + Util.filterForProduct , httpClient);
+            String responseFromJson = connection.readData(httpResponse);
             Gson gson = new Gson();
             ProductDataSet product = gson.fromJson(responseFromJson, ProductDataSet.class);
             productList.addAll(product.d.results);
